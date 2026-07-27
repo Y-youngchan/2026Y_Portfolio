@@ -122,7 +122,7 @@ export default function Home() {
               <a href="mailto:sunhama2000@naver.com"><small>EMAIL</small>sunhama2000@naver.com <Arrow /></a>
               <a href={githubUrl} target="_blank" rel="noreferrer"><small>GITHUB</small>github.com/Y-youngchan <Arrow /></a>
             </div>
-            <footer><span>© 2026 YOO YOUNGCHAN</span><a href="#top">BACK TO TOP ↑</a></footer>
+            <footer><span>© 2026 YU YOUNGCHAN</span><a href="#top">BACK TO TOP ↑</a></footer>
           </div>
         </section>
       </main>

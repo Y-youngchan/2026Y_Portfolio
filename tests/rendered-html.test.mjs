@@ -40,6 +40,8 @@ test("server-renders the approved portfolio content", async () => {
   assert.match(html, /북스토어/);
   assert.match(html, /sunhama2000@naver\.com/);
   assert.match(html, /https:\/\/github\.com\/Y-youngchan/);
+  assert.match(html, /© 2026 YU YOUNGCHAN/);
+  assert.doesNotMatch(html, /YOO YOUNGCHAN/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape/);
 });
 
@@ -77,7 +79,13 @@ test("publishes a site-specific social preview image", async () => {
   const response = await render();
   const html = await response.text();
 
-  assert.match(html, /property="og:image" content="http:\/\/localhost\/og\.png"/);
+  assert.match(
+    html,
+    /property="og:image" content="http:\/\/localhost\/og-yu-youngchan\.png"/,
+  );
   assert.match(html, /name="twitter:card" content="summary_large_image"/);
-  assert.match(html, /name="twitter:image" content="http:\/\/localhost\/og\.png"/);
+  assert.match(
+    html,
+    /name="twitter:image" content="http:\/\/localhost\/og-yu-youngchan\.png"/,
+  );
 });
