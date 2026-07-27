@@ -65,7 +65,7 @@ export default function Home() {
         <section className="skills-section" id="skills" aria-labelledby="skills-title">
           <div className="section-shell">
             <div className="section-heading horizontal">
-              <span className="eyebrow">02 · SKILLS</span><h2 id="skills-title">배운 기술을 연결해 서비스를 만듭니다.</h2>
+              <span className="eyebrow">02 · SKILLS</span><h2 id="skills-title">불가능이 사라진 사회에서 서비스를 만듭니다.</h2>
             </div>
             <div className="skills-grid">
               {skillGroups.map((group, index) => (
