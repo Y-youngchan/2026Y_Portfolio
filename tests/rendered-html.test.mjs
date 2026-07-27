@@ -81,11 +81,11 @@ test("publishes a site-specific social preview image", async () => {
 
   assert.match(
     html,
-    /property="og:image" content="http:\/\/localhost\/og-yu-youngchan\.png"/,
+    /property="og:image" content="https:\/\/yoo-youngchan-portfolio\.sunhama2000\.chatgpt\.site\/og-yu-youngchan\.png"/,
   );
   assert.match(html, /name="twitter:card" content="summary_large_image"/);
   assert.match(
     html,
-    /name="twitter:image" content="http:\/\/localhost\/og-yu-youngchan\.png"/,
+    /name="twitter:image" content="https:\/\/yoo-youngchan-portfolio\.sunhama2000\.chatgpt\.site\/og-yu-youngchan\.png"/,
   );
 });

@@ -1,5 +1,7 @@
 import { navigationItems, projects, skillGroups, strengths } from "./data/portfolio-data";
 
+export const dynamic = "force-static";
+
 const githubUrl = "https://github.com/Y-youngchan";
 
 function Arrow() {
