@@ -1,4 +1,6 @@
-import { navigationItems, projects, skillGroups, strengths } from "./data/portfolio-data";
+import { ProjectActions } from "./components/project-actions";
+import { SiteNavigation } from "./components/site-navigation";
+import { projects, skillGroups, strengths } from "./data/portfolio-data";
 
 export const dynamic = "force-static";
 
@@ -11,19 +13,9 @@ function Arrow() {
 export default function Home() {
   return (
     <>
-      <header className="site-header">
-        <a className="brand" href="#top" aria-label="페이지 맨 위로 이동">
-          <span>Y</span><strong>YOUNGCHAN</strong>
-        </a>
-        <nav aria-label="주요 내비게이션">
-          {navigationItems.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}
-        </nav>
-        <a className="header-contact" href="mailto:sunhama2000@naver.com">
-          Let&apos;s talk <Arrow />
-        </a>
-      </header>
+      <SiteNavigation />
 
-      <main id="top">
+      <main className="site-content" id="top">
         <section className="hero section-shell" aria-labelledby="hero-title">
           <div className="hero-kicker"><span className="pulse" aria-hidden="true" />NEW DEVELOPER · 2026</div>
           <h1 id="hero-title">무에서 유를 창조하는<br /><em>성취감을 알아버렸습니다.</em></h1>
@@ -90,9 +82,11 @@ export default function Home() {
                   <h3>{project.title}</h3><p>{project.description}</p>
                   <ul aria-label={`${project.title} 담당 역할`}>{project.role.map((role) => <li key={role}>{role}</li>)}</ul>
                 </div>
-                <a href={project.href} target="_blank" rel="noreferrer" aria-label={`${project.title} - ${project.linkLabel}`}>
-                  {project.linkLabel} <Arrow />
-                </a>
+                <ProjectActions
+                  title={project.title}
+                  githubUrl={project.githubUrl}
+                  projectUrl={project.projectUrl}
+                />
               </article>
             ))}
           </div>

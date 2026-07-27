@@ -42,8 +42,8 @@ export const projects = [
     type: "팀 프로젝트",
     description: "챗봇부터 프론트엔드, 백엔드, QA까지 서비스 전반을 경험한 주식 정보 웹 프로젝트입니다.",
     role: ["챗봇", "프론트엔드", "백엔드", "QA"],
-    href: "https://github.com/Y-youngchan/Trading",
-    linkLabel: "GitHub에서 프로젝트 보기",
+    githubUrl: "https://github.com/Y-youngchan/Trading",
+    projectUrl: "https://trading-lake-ten.vercel.app/",
     accent: "blue",
   },
   {
@@ -52,8 +52,8 @@ export const projects = [
     type: "팀 프로젝트",
     description: "화면 구현부터 서버 기능과 데이터베이스 연결까지 예매 흐름을 완성한 팀 프로젝트입니다.",
     role: ["프론트엔드", "백엔드", "DB 연결"],
-    href: "https://github.com/Y-youngchan/movie_260407",
-    linkLabel: "GitHub에서 프로젝트 보기",
+    githubUrl: "https://github.com/Y-youngchan/movie_260407",
+    projectUrl: null,
     accent: "violet",
   },
   {
@@ -62,8 +62,8 @@ export const projects = [
     type: "팀 프로젝트",
     description: "계절에 따른 감기약 수요를 예측하는 머신러닝·딥러닝 모델을 이끌고 서비스로 구현했습니다.",
     role: ["팀장", "머신러닝", "딥러닝", "AI 모델링"],
-    href: "https://huggingface.co/spaces/yyc1327/DrugMain",
-    linkLabel: "서비스 체험하기",
+    githubUrl: "https://github.com/Drug2026/Drug_main",
+    projectUrl: "https://huggingface.co/spaces/yyc1327/DrugMain",
     accent: "navy",
   },
   {
@@ -72,8 +72,8 @@ export const projects = [
     type: "첫 개인 프로젝트",
     description: "HTML, CSS, JavaScript의 기본기를 바탕으로 직접 설계하고 카카오 검색 OPEN API를 사용하여 완성한 첫 웹 프로젝트입니다.",
     role: ["HTML", "CSS", "JavaScript", "카카오 검색 OPEN API"],
-    href: "https://github.com/Y-youngchan/bookstore",
-    linkLabel: "GitHub에서 프로젝트 보기",
+    githubUrl: "https://github.com/Y-youngchan/bookstore",
+    projectUrl: null,
     accent: "sky",
   },
 ] as const;

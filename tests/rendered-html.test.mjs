@@ -48,6 +48,7 @@ test("server-renders the approved portfolio content", async () => {
 test("renders accessible section navigation and safe project links", async () => {
   const response = await render();
   const html = await response.text();
+  const documentHtml = html.split('<script id="_R_">', 1)[0];
 
   for (const id of ["about", "skills", "projects", "vision", "contact"]) {
     assert.match(html, new RegExp(`href="#${id}"`));
@@ -56,14 +57,39 @@ test("renders accessible section navigation and safe project links", async () =>
 
   assert.match(html, /href="mailto:sunhama2000@naver\.com"/);
   assert.match(html, /href="https:\/\/github\.com\/Y-youngchan\/Trading"/);
+  assert.match(html, /href="https:\/\/trading-lake-ten\.vercel\.app\/"/);
   assert.match(html, /href="https:\/\/github\.com\/Y-youngchan\/movie_260407"/);
+  assert.match(html, /href="https:\/\/github\.com\/Drug2026\/Drug_main"/);
   assert.match(
     html,
     /href="https:\/\/huggingface\.co\/spaces\/yyc1327\/DrugMain"/,
   );
   assert.match(html, /href="https:\/\/github\.com\/Y-youngchan\/bookstore"/);
+  assert.equal(
+    (documentHtml.match(/<a[^>]+aria-label="[^"]+GitHub에서 프로젝트 보기"/g) ?? []).length,
+    4,
+  );
+  assert.equal(
+    (documentHtml.match(/<(?:a|button)[^>]+aria-label="[^"]+프로젝트 확인하기[^"]*"/g) ?? []).length,
+    4,
+  );
+  assert.equal((documentHtml.match(/data-project-status="preparing"/g) ?? []).length, 2);
   assert.match(html, /target="_blank"/);
   assert.match(html, /rel="noreferrer"/);
+});
+
+test("renders desktop sidebar and accessible mobile navigation", async () => {
+  const response = await render();
+  const html = await response.text();
+  const documentHtml = html.split('<script id="_R_">', 1)[0];
+
+  assert.match(documentHtml, /class="site-sidebar"/);
+  assert.match(documentHtml, /class="mobile-menu-toggle"/);
+  assert.match(documentHtml, /aria-controls="mobile-navigation"/);
+  assert.match(documentHtml, /aria-expanded="false"/);
+  assert.match(documentHtml, /id="mobile-navigation"/);
+  assert.match(documentHtml, /class="mobile-menu-overlay"/);
+  assert.doesNotMatch(documentHtml, /class="site-header"/);
 });
 
 test("includes responsive and reduced-motion safeguards", async () => {
@@ -73,6 +99,11 @@ test("includes responsive and reduced-motion safeguards", async () => {
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
   assert.match(css, /focus-visible/);
   assert.match(css, /overflow-x:\s*hidden/);
+  assert.match(css, /\.site-sidebar[\s\S]*width:\s*220px/);
+  assert.match(css, /\.site-content[\s\S]*margin-left:\s*220px/);
+  assert.match(css, /@media \(max-width:\s*900px\)/);
+  assert.match(css, /width:\s*min\(280px,\s*85vw\)/);
+  assert.match(css, /translateX\(6px\)/);
 });
 
 test("publishes a site-specific social preview image", async () => {
