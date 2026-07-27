@@ -27,7 +27,10 @@ test("publishes the static export through the official Pages actions", async () 
   assert.match(workflow, /actions\/configure-pages@v5/);
   assert.match(workflow, /actions\/upload-pages-artifact@v4/);
   assert.match(workflow, /actions\/deploy-pages@v4/);
-  assert.match(workflow, /pnpm exec next build --webpack/);
+  assert.match(workflow, /cache:\s*npm/);
+  assert.match(workflow, /run:\s*npm ci/);
+  assert.match(workflow, /run:\s*npx next build --webpack/);
+  assert.doesNotMatch(workflow, /pnpm\/action-setup/);
   assert.doesNotMatch(workflow, /pnpm exec vinext build/);
   assert.match(workflow, /path:\s*\.\/out/);
   assert.match(workflow, /GITHUB_PAGES:\s*"true"/);
