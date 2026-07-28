@@ -59,6 +59,7 @@ test("renders accessible section navigation and safe project links", async () =>
   assert.match(html, /href="https:\/\/github\.com\/Y-youngchan\/Trading"/);
   assert.match(html, /href="https:\/\/trading-lake-ten\.vercel\.app\/"/);
   assert.match(html, /href="https:\/\/github\.com\/Y-youngchan\/movie_260407"/);
+  assert.match(html, /href="https:\/\/filmatique-vfst\.onrender\.com"/);
   assert.match(html, /href="https:\/\/github\.com\/Drug2026\/Drug_main"/);
   assert.match(
     html,
@@ -73,7 +74,7 @@ test("renders accessible section navigation and safe project links", async () =>
     (documentHtml.match(/<(?:a|button)[^>]+aria-label="[^"]+프로젝트 확인하기[^"]*"/g) ?? []).length,
     4,
   );
-  assert.equal((documentHtml.match(/data-project-status="preparing"/g) ?? []).length, 2);
+  assert.equal((documentHtml.match(/data-project-status="preparing"/g) ?? []).length, 1);
   assert.match(html, /target="_blank"/);
   assert.match(html, /rel="noreferrer"/);
 });

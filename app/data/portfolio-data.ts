@@ -93,7 +93,7 @@ export const projects = [
     apiIntegration: ["TMDB", "Toss Payments"],
     deployment: ["Docker"],
     githubUrl: "https://github.com/Y-youngchan/movie_260407",
-    projectUrl: null,
+    projectUrl: "https://filmatique-vfst.onrender.com",
     accent: "violet",
   },
   {
