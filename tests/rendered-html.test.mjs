@@ -42,6 +42,7 @@ test("server-renders the approved portfolio content", async () => {
   assert.match(html, /https:\/\/github\.com\/Y-youngchan/);
   assert.match(html, /© 2026 YU YOUNGCHAN/);
   assert.doesNotMatch(html, /YOO YOUNGCHAN/);
+  assert.doesNotMatch(html, /class="button button-secondary"[^>]*>GitHub/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape/);
 });
 

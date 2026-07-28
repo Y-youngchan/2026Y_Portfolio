@@ -23,7 +23,6 @@ export default function Home() {
             <p>도전하고 경험하며 성취하는 지원자<strong> 유영찬</strong>입니다.</p>
             <div className="hero-actions">
               <a className="button button-primary" href="#projects">프로젝트 보기 <Arrow /></a>
-              <a className="button button-secondary" href={githubUrl} target="_blank" rel="noreferrer">GitHub <Arrow /></a>
             </div>
           </div>
           <div className="hero-orbit" aria-hidden="true">
