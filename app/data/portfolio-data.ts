@@ -28,11 +28,26 @@ export const strengths = [
 ] as const;
 
 export const skillGroups = [
-  { title: "Front-End", skills: ["HTML5", "CSS3", "JavaScript", "TypeScript", "React"] },
-  { title: "Back-End", skills: ["Python", "Flask", "SQLAlchemy", "REST API"] },
-  { title: "AI / Data", skills: ["Pandas", "NumPy", "Scikit-Learn", "TensorFlow", "OpenAI API"] },
-  { title: "DB & Deploy", skills: ["SQLite", "Supabase/PostgreSQL", "Streamlit", "Docker"] },
-  { title: "Collaboration", skills: ["Git", "GitHub", "VS Code", "Figma"] },
+  {
+    title: "Front-End",
+    skills: ["HTML5", "CSS3", "JavaScript", "TypeScript", "React", "Vite", "Tailwind CSS"],
+  },
+  {
+    title: "Back-End",
+    skills: ["Python", "Flask", "FastAPI", "SQLAlchemy", "REST API"],
+  },
+  {
+    title: "AI / Data",
+    skills: ["Pandas", "NumPy", "Scikit-learn", "XGBoost", "Optuna", "OpenAI API"],
+  },
+  {
+    title: "Database",
+    skills: ["SQLite", "PostgreSQL", "Supabase"],
+  },
+  {
+    title: "Deploy & Tools",
+    skills: ["Docker", "Streamlit", "Git", "GitHub", "VS Code", "Figma"],
+  },
 ] as const;
 
 export type Project = {
@@ -45,8 +60,10 @@ export type Project = {
   projectUrl: string | null;
   accent: "blue" | "violet" | "navy" | "sky";
   techStack?: readonly string[];
+  database?: readonly string[];
   chatbot?: readonly string[];
   apiIntegration?: readonly string[];
+  deployment?: readonly string[];
   models?: readonly string[];
   methods?: readonly string[];
 };
@@ -71,6 +88,10 @@ export const projects = [
     type: "팀 프로젝트",
     description: "화면 구현부터 서버 기능과 데이터베이스 연결까지 예매 흐름을 완성한 팀 프로젝트입니다.",
     contribution: ["프론트엔드", "백엔드", "DB 연결"],
+    techStack: ["HTML5", "CSS3", "JavaScript", "Python", "Flask"],
+    database: ["SQLite", "SQLAlchemy", "Flask-Migrate"],
+    apiIntegration: ["TMDB", "Toss Payments"],
+    deployment: ["Docker"],
     githubUrl: "https://github.com/Y-youngchan/movie_260407",
     projectUrl: null,
     accent: "violet",

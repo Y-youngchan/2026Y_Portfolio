@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { navigationItems } from "../data/portfolio-data";
 
@@ -46,22 +46,22 @@ export function SiteNavigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const clearCloseTimer = () => {
+  const clearCloseTimer = useCallback(() => {
     if (closeTimerRef.current) {
       clearTimeout(closeTimerRef.current);
       closeTimerRef.current = null;
     }
-  };
+  }, []);
 
   const openSidebar = () => {
     clearCloseTimer();
     setIsSidebarOpen(true);
   };
 
-  const closeSidebar = () => {
+  const closeSidebar = useCallback(() => {
     clearCloseTimer();
     setIsSidebarOpen(false);
-  };
+  }, [clearCloseTimer]);
 
   const scheduleSidebarClose = () => {
     clearCloseTimer();
@@ -86,7 +86,7 @@ export function SiteNavigation() {
       window.removeEventListener("keydown", closeOnEscape);
       clearCloseTimer();
     };
-  }, []);
+  }, [clearCloseTimer, closeSidebar]);
 
   return (
     <>

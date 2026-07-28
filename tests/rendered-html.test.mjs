@@ -122,6 +122,15 @@ test("renders flippable project cards with verified details", async () => {
     "Finnhub",
     "DART",
     "Tavily",
+    "HTML5",
+    "CSS3",
+    "JavaScript",
+    "SQLite",
+    "SQLAlchemy",
+    "Flask-Migrate",
+    "TMDB",
+    "Toss Payments",
+    "Docker",
     "Python",
     "Pandas",
     "NumPy",
@@ -137,8 +146,33 @@ test("renders flippable project cards with verified details", async () => {
 
   assert.match(documentHtml, />CHATBOT</);
   assert.match(documentHtml, />API INTEGRATION</);
+  assert.match(documentHtml, />DATABASE</);
+  assert.match(documentHtml, />DEPLOYMENT</);
   assert.doesNotMatch(documentHtml, />TRADE HISTORY</);
   assert.doesNotMatch(documentHtml, /프로젝트 코드 확인 후 업데이트|기술 스택 정리 중/);
+});
+
+test("renders the verified portfolio skill groups", async () => {
+  const response = await render();
+  const html = await response.text();
+  const documentHtml = html.split('<script id="_R_">', 1)[0];
+
+  for (const skill of [
+    "TypeScript",
+    "FastAPI",
+    "Vite",
+    "Tailwind CSS",
+    "XGBoost",
+    "Optuna",
+    "PostgreSQL",
+    "Supabase",
+    "Docker",
+  ]) {
+    assert.match(documentHtml, new RegExp(skill));
+  }
+
+  assert.match(documentHtml, />Database</);
+  assert.match(documentHtml, />Deploy &amp; Tools</);
 });
 
 test("includes responsive and reduced-motion safeguards", async () => {
