@@ -55,6 +55,12 @@ export function ProjectCard({ project }: { project: Project }) {
             {project.techStack && (
               <DetailGroup label="TECH STACK" items={project.techStack} />
             )}
+            {project.chatbot && (
+              <DetailGroup label="CHATBOT" items={project.chatbot} />
+            )}
+            {project.apiIntegration && (
+              <DetailGroup label="API INTEGRATION" items={project.apiIntegration} />
+            )}
             {project.models && (
               <DetailGroup label="MODELING" items={project.models} />
             )}

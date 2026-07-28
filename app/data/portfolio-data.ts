@@ -45,6 +45,8 @@ export type Project = {
   projectUrl: string | null;
   accent: "blue" | "violet" | "navy" | "sky";
   techStack?: readonly string[];
+  chatbot?: readonly string[];
+  apiIntegration?: readonly string[];
   models?: readonly string[];
   methods?: readonly string[];
 };
@@ -55,7 +57,10 @@ export const projects = [
     title: "Trading",
     type: "팀 프로젝트",
     description: "챗봇부터 프론트엔드, 백엔드, QA까지 서비스 전반을 경험한 주식 정보 웹 프로젝트입니다.",
-    contribution: ["챗봇", "프론트엔드", "백엔드", "QA"],
+    contribution: ["프론트엔드", "백엔드", "챗봇", "QA"],
+    techStack: ["React", "Vite", "Tailwind CSS", "Python", "Flask", "Supabase"],
+    chatbot: ["OpenAI", "LangChain", "LangGraph", "RAG", "Tool Calling"],
+    apiIntegration: ["KIS", "Toss", "Coinone", "Binance", "Naver News", "Finnhub", "DART", "Tavily"],
     githubUrl: "https://github.com/Y-youngchan/Trading",
     projectUrl: "https://trading-lake-ten.vercel.app/",
     accent: "blue",

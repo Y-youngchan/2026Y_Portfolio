@@ -107,6 +107,21 @@ test("renders flippable project cards with verified details", async () => {
   assert.equal((documentHtml.match(/>CONTRIBUTION</g) ?? []).length, 4);
 
   for (const detail of [
+    "React",
+    "Vite",
+    "Tailwind CSS",
+    "OpenAI",
+    "LangChain",
+    "LangGraph",
+    "Tool Calling",
+    "KIS",
+    "Toss",
+    "Coinone",
+    "Binance",
+    "Naver News",
+    "Finnhub",
+    "DART",
+    "Tavily",
     "Python",
     "Pandas",
     "NumPy",
@@ -120,6 +135,9 @@ test("renders flippable project cards with verified details", async () => {
     assert.match(documentHtml, new RegExp(detail));
   }
 
+  assert.match(documentHtml, />CHATBOT</);
+  assert.match(documentHtml, />API INTEGRATION</);
+  assert.doesNotMatch(documentHtml, />TRADE HISTORY</);
   assert.doesNotMatch(documentHtml, /프로젝트 코드 확인 후 업데이트|기술 스택 정리 중/);
 });
 
