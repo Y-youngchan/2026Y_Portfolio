@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export function ScrollReveal() {
+  const progressBarRef = useRef<HTMLSpanElement>(null);
+
   useEffect(() => {
     const elements = Array.from(
       document.querySelectorAll<HTMLElement>("[data-reveal]"),
@@ -37,5 +39,43 @@ export function ScrollReveal() {
     return () => observer.disconnect();
   }, []);
 
-  return <span aria-hidden="true" data-reveal-root="true" hidden />;
+  useEffect(() => {
+    let animationFrame = 0;
+
+    const updateProgress = () => {
+      const scrollableHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollableHeight > 0
+        ? Math.min(window.scrollY / scrollableHeight, 1)
+        : 0;
+
+      if (progressBarRef.current) {
+        progressBarRef.current.style.transform = `scaleY(${progress})`;
+      }
+    };
+
+    const scheduleProgressUpdate = () => {
+      cancelAnimationFrame(animationFrame);
+      animationFrame = requestAnimationFrame(updateProgress);
+    };
+
+    updateProgress();
+    window.addEventListener("scroll", scheduleProgressUpdate, { passive: true });
+    window.addEventListener("resize", scheduleProgressUpdate);
+
+    return () => {
+      cancelAnimationFrame(animationFrame);
+      window.removeEventListener("scroll", scheduleProgressUpdate);
+      window.removeEventListener("resize", scheduleProgressUpdate);
+    };
+  }, []);
+
+  return (
+    <>
+      <span aria-hidden="true" data-reveal-root="true" hidden />
+      <div className="scroll-progress" aria-hidden="true">
+        <span className="scroll-progress-bar" ref={progressBarRef} />
+      </div>
+    </>
+  );
 }

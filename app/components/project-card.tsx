@@ -1,5 +1,6 @@
 "use client";
 
+import type { PointerEvent } from "react";
 import { useState } from "react";
 
 import type { Project } from "../data/portfolio-data";
@@ -34,10 +35,35 @@ export function ProjectCard({
     ? ""
     : ` reveal reveal-delay-${revealDelay}`;
 
+  const handlePointerMove = (event: PointerEvent<HTMLElement>) => {
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+      return;
+    }
+
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const normalizedX = (event.clientX - bounds.left) / bounds.width;
+    const normalizedY = (event.clientY - bounds.top) / bounds.height;
+    const rotateX = (0.5 - normalizedY) * 5;
+    const rotateY = (normalizedX - 0.5) * 5;
+
+    event.currentTarget.style.setProperty("--pointer-x", `${normalizedX * 100}%`);
+    event.currentTarget.style.setProperty("--pointer-y", `${normalizedY * 100}%`);
+    event.currentTarget.style.setProperty("--tilt-x", `${rotateX}deg`);
+    event.currentTarget.style.setProperty("--tilt-y", `${rotateY}deg`);
+  };
+
+  const resetTilt = (event: PointerEvent<HTMLElement>) => {
+    event.currentTarget.style.setProperty("--tilt-x", "0deg");
+    event.currentTarget.style.setProperty("--tilt-y", "0deg");
+  };
+
   return (
     <article
       className={`project-card project-${project.accent}${revealClass}`}
+      data-project-tilt="true"
       data-reveal={revealDelay === undefined ? undefined : "up"}
+      onPointerMove={handlePointerMove}
+      onPointerLeave={resetTilt}
     >
       <div
         className="project-card-flip-zone"

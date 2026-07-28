@@ -1,3 +1,5 @@
+import { MagneticLink } from "./components/magnetic-link";
+import { PointerGlow } from "./components/pointer-glow";
 import { ProjectCard } from "./components/project-card";
 import { ScrollReveal } from "./components/scroll-reveal";
 import { SiteNavigation } from "./components/site-navigation";
@@ -16,15 +18,21 @@ export default function Home() {
     <>
       <SiteNavigation />
       <ScrollReveal />
+      <PointerGlow />
 
       <main className="site-content" id="top">
         <section className="hero section-shell hero-sequence" aria-labelledby="hero-title">
-          <div className="hero-kicker"><span className="pulse" aria-hidden="true" />NEW DEVELOPER · 2026</div>
-          <h1 id="hero-title">무에서 유를 창조하는<br /><em>성취감을 알아버렸습니다.</em></h1>
+          <div className="hero-kicker">YU YOUNGCHAN · DIGITAL PORTFOLIO</div>
+          <h1 className="hero-korean" id="hero-title">
+            <span className="hero-line-mask"><span className="hero-line-inner">무에서 유를 창조하는</span></span>
+            <span className="hero-line-mask"><em className="hero-line-inner">성취감을 알아버렸습니다.</em></span>
+          </h1>
           <div className="hero-bottom">
-            <p>도전하고 경험하며 성취하는 지원자<strong> 유영찬</strong>입니다.</p>
+            <p>도전하고 경험하며 성취하는 지원자 <strong>유영찬</strong>입니다.</p>
             <div className="hero-actions">
-              <a className="button button-primary" href="#projects">프로젝트 보기 <Arrow /></a>
+              <MagneticLink className="button button-primary" href="#projects">
+                SCROLL TO EXPLORE ↓
+              </MagneticLink>
             </div>
           </div>
           <div className="hero-orbit" aria-hidden="true">
@@ -32,9 +40,25 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="intro-strip" aria-label="희망 직무">
-          <span>WEB DEVELOPMENT</span><i>+</i><span>FRONT-END</span><i>+</i>
-          <span>UI/UX DESIGN</span><i>+</i><span>WEB SERVICE PLANNING</span>
+        <section className="role-marquee" aria-label="희망 직무">
+          <div className="role-marquee-track">
+            <div className="role-marquee-set">
+              <span>WEB DEVELOPMENT</span><i>✦</i><span>FRONT-END</span><i>✦</i>
+              <span>UI/UX DESIGN</span><i>✦</i><span>WEB SERVICE PLANNING</span><i>✦</i>
+            </div>
+            <div className="role-marquee-set" aria-hidden="true">
+              <span>WEB DEVELOPMENT</span><i>✦</i><span>FRONT-END</span><i>✦</i>
+              <span>UI/UX DESIGN</span><i>✦</i><span>WEB SERVICE PLANNING</span><i>✦</i>
+            </div>
+            <div className="role-marquee-set" aria-hidden="true">
+              <span>WEB DEVELOPMENT</span><i>✦</i><span>FRONT-END</span><i>✦</i>
+              <span>UI/UX DESIGN</span><i>✦</i><span>WEB SERVICE PLANNING</span><i>✦</i>
+            </div>
+            <div className="role-marquee-set" aria-hidden="true">
+              <span>WEB DEVELOPMENT</span><i>✦</i><span>FRONT-END</span><i>✦</i>
+              <span>UI/UX DESIGN</span><i>✦</i><span>WEB SERVICE PLANNING</span><i>✦</i>
+            </div>
+          </div>
         </section>
 
         <section className="section-shell section-grid" id="about" aria-labelledby="about-title">
@@ -97,7 +121,13 @@ export default function Home() {
         <section className="work-style" id="work-style" aria-labelledby="work-style-title">
           <div className="section-shell work-style-inner">
             <span className="eyebrow light">04 · HOW I WORK</span>
-            <blockquote id="work-style-title">“무지는 죄가 아니다.<br /><em>알려 하지 않는 것이 죄다.</em>”</blockquote>
+            <blockquote
+              className="reveal"
+              data-reveal="up"
+              id="work-style-title"
+            >
+              “무지는 죄가 아니다.<br /><em className="work-style-highlight">알려 하지 않는 것이 죄다.</em>”
+            </blockquote>
             <p>모를 수 있습니다. 해결이 어려울 수도 있습니다.<br />혼자 멈추지 않고 동료와 같이 알아가며 끝까지 해결하겠습니다.</p>
           </div>
         </section>

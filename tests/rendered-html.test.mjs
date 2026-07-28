@@ -30,10 +30,10 @@ test("server-renders the approved portfolio content", async () => {
   const html = await response.text();
   assert.match(html, /<html lang="ko">/);
   assert.match(html, /<title>유영찬 \| Web Developer Portfolio<\/title>/);
-  assert.match(
-    html,
-    /무에서 유를 창조하는<br\/><em>성취감을 알아버렸습니다\.<\/em>/,
-  );
+  assert.match(html, /무에서 유를 창조하는/);
+  assert.match(html, /성취감을 알아버렸습니다\./);
+  assert.match(html, /도전하고 경험하며 성취하는 지원자/);
+  assert.match(html, /<strong>유영찬<\/strong>입니다\./);
   assert.match(html, /Trading/);
   assert.match(html, /영화 예매 사이트/);
   assert.match(html, /계절별 감기약 수요 예측/);
@@ -189,18 +189,48 @@ test("renders the first-phase motion system without hiding content semantics", a
   assert.match(documentHtml, /data-reveal-root="true"/);
 });
 
+test("renders the second-phase navigation and interaction feedback", async () => {
+  const response = await render();
+  const html = await response.text();
+  const documentHtml = html.split('<script id="_R_">', 1)[0];
+
+  assert.match(documentHtml, /class="scroll-progress"/);
+  assert.match(documentHtml, /class="scroll-progress-bar"/);
+  assert.match(documentHtml, /href="#about"[^>]*aria-current="location"/);
+  assert.match(documentHtml, /class="work-style-highlight"/);
+});
+
+test("renders the creative motion interaction system", async () => {
+  const response = await render();
+  const html = await response.text();
+  const documentHtml = html.split('<script id="_R_">', 1)[0];
+
+  assert.match(documentHtml, /data-pointer-glow="true"/);
+  assert.match(documentHtml, /data-magnetic-link="true"/);
+  assert.match(documentHtml, /class="hero-line-mask"/);
+  assert.match(documentHtml, /class="role-marquee"/);
+  assert.equal(
+    (documentHtml.match(/class="role-marquee-set"/g) ?? []).length,
+    4,
+  );
+  assert.equal(
+    (documentHtml.match(/data-project-tilt="true"/g) ?? []).length,
+    4,
+  );
+  assert.ok((documentHtml.match(/class="navigation-index"/g) ?? []).length >= 5);
+});
+
 test("includes responsive and reduced-motion safeguards", async () => {
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
 
   for (const color of [
-    "#f3f6f8",
-    "#172b3a",
-    "#e86a33",
-    "#183b56",
-    "#d7e0e7",
-    "#2563a6",
-    "#d65f3c",
-    "#b88332",
+    "#111827",
+    "#ff6b4a",
+    "#f7f1e8",
+    "#aeb6c2",
+    "#087f8c",
+    "#6c5ce7",
+    "#c97847",
   ]) {
     assert.match(css.toLowerCase(), new RegExp(color));
   }
@@ -210,6 +240,11 @@ test("includes responsive and reduced-motion safeguards", async () => {
   assert.match(css, /\.reveal\.is-visible/);
   assert.match(css, /@keyframes\s+hero-reveal/);
   assert.match(css, /\.vision-highlight/);
+  assert.match(css, /\.scroll-progress/);
+  assert.match(css, /\.site-sidebar nav a\.is-active/);
+  assert.match(css, /\.skill-group li:hover/);
+  assert.match(css, /\.project-actions[^}]*span:last-child/);
+  assert.match(css, /\.work-style-highlight/);
   assert.match(css, /focus-visible/);
   assert.match(css, /overflow-x:\s*hidden/);
   assert.match(css, /\.site-sidebar[\s\S]*width:\s*220px/);
@@ -224,6 +259,9 @@ test("includes responsive and reduced-motion safeguards", async () => {
   assert.match(css, /@media \(max-width:\s*900px\)/);
   assert.match(css, /width:\s*min\(280px,\s*85vw\)/);
   assert.match(css, /translateX\(6px\)/);
+  assert.match(css, /@keyframes\s+role-marquee/);
+  assert.match(css, /\.pointer-glow/);
+  assert.match(css, /\.project-card::before/);
 });
 
 test("publishes a site-specific social preview image", async () => {

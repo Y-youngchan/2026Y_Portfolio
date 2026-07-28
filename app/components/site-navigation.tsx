@@ -15,12 +15,27 @@ function Brand() {
   );
 }
 
-function NavigationLinks({ onNavigate }: { onNavigate?: () => void }) {
+function NavigationLinks({
+  activeHref,
+  onNavigate,
+}: {
+  activeHref: string;
+  onNavigate?: () => void;
+}) {
   return (
     <nav aria-label="주요 내비게이션">
-      {navigationItems.map((item) => (
-        <a key={item.href} href={item.href} onClick={onNavigate}>
+      {navigationItems.map((item, index) => (
+        <a
+          key={item.href}
+          href={item.href}
+          aria-current={activeHref === item.href ? "location" : undefined}
+          className={activeHref === item.href ? "is-active" : undefined}
+          onClick={onNavigate}
+        >
           <span aria-hidden="true" />
+          <small className="navigation-index" aria-hidden="true">
+            {String(index + 1).padStart(2, "0")}
+          </small>
           {item.label}
         </a>
       ))}
@@ -44,6 +59,7 @@ function ContactLink({ onNavigate }: { onNavigate?: () => void }) {
 export function SiteNavigation() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeHref, setActiveHref] = useState("#about");
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const clearCloseTimer = useCallback(() => {
@@ -88,6 +104,28 @@ export function SiteNavigation() {
     };
   }, [clearCloseTimer, closeSidebar]);
 
+  useEffect(() => {
+    const sections = navigationItems
+      .map((item) => document.querySelector<HTMLElement>(item.href))
+      .filter((section): section is HTMLElement => Boolean(section));
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntry = entries.find((entry) => entry.isIntersecting);
+        if (visibleEntry) {
+          setActiveHref(`#${visibleEntry.target.id}`);
+        }
+      },
+      {
+        rootMargin: "-32% 0px -55% 0px",
+        threshold: 0,
+      },
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <>
       <button
@@ -118,7 +156,7 @@ export function SiteNavigation() {
         }}
       >
         <Brand />
-        <NavigationLinks onNavigate={closeSidebar} />
+        <NavigationLinks activeHref={activeHref} onNavigate={closeSidebar} />
         <ContactLink onNavigate={closeSidebar} />
       </aside>
 
@@ -152,7 +190,7 @@ export function SiteNavigation() {
         inert={!isMenuOpen}
       >
         <Brand />
-        <NavigationLinks onNavigate={closeMenu} />
+        <NavigationLinks activeHref={activeHref} onNavigate={closeMenu} />
         <ContactLink onNavigate={closeMenu} />
       </aside>
     </>
