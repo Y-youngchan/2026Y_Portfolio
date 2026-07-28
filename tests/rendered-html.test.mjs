@@ -177,11 +177,39 @@ test("renders the verified portfolio skill groups", async () => {
   assert.match(documentHtml, />Deploy &amp; Tools</);
 });
 
+test("renders the first-phase motion system without hiding content semantics", async () => {
+  const response = await render();
+  const html = await response.text();
+  const documentHtml = html.split('<script id="_R_">', 1)[0];
+
+  assert.match(documentHtml, /class="hero[^"]*hero-sequence/);
+  assert.ok((documentHtml.match(/data-reveal="up"/g) ?? []).length >= 12);
+  assert.match(documentHtml, /class="[^"]*reveal-delay-1/);
+  assert.match(documentHtml, /class="vision-highlight"/);
+  assert.match(documentHtml, /data-reveal-root="true"/);
+});
+
 test("includes responsive and reduced-motion safeguards", async () => {
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
 
+  for (const color of [
+    "#f3f6f8",
+    "#172b3a",
+    "#e86a33",
+    "#183b56",
+    "#d7e0e7",
+    "#2563a6",
+    "#d65f3c",
+    "#b88332",
+  ]) {
+    assert.match(css.toLowerCase(), new RegExp(color));
+  }
+
   assert.match(css, /@media \(max-width:\s*760px\)/);
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
+  assert.match(css, /\.reveal\.is-visible/);
+  assert.match(css, /@keyframes\s+hero-reveal/);
+  assert.match(css, /\.vision-highlight/);
   assert.match(css, /focus-visible/);
   assert.match(css, /overflow-x:\s*hidden/);
   assert.match(css, /\.site-sidebar[\s\S]*width:\s*220px/);

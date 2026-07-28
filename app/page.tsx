@@ -1,4 +1,5 @@
 import { ProjectCard } from "./components/project-card";
+import { ScrollReveal } from "./components/scroll-reveal";
 import { SiteNavigation } from "./components/site-navigation";
 import { projects, skillGroups, strengths } from "./data/portfolio-data";
 
@@ -14,9 +15,10 @@ export default function Home() {
   return (
     <>
       <SiteNavigation />
+      <ScrollReveal />
 
       <main className="site-content" id="top">
-        <section className="hero section-shell" aria-labelledby="hero-title">
+        <section className="hero section-shell hero-sequence" aria-labelledby="hero-title">
           <div className="hero-kicker"><span className="pulse" aria-hidden="true" />NEW DEVELOPER · 2026</div>
           <h1 id="hero-title">무에서 유를 창조하는<br /><em>성취감을 알아버렸습니다.</em></h1>
           <div className="hero-bottom">
@@ -36,16 +38,20 @@ export default function Home() {
         </section>
 
         <section className="section-shell section-grid" id="about" aria-labelledby="about-title">
-          <div className="section-heading">
+          <div className="section-heading reveal" data-reveal="up">
             <span className="eyebrow">01 · ABOUT</span><h2 id="about-title">왜 개발자인가?</h2>
           </div>
-          <div className="about-copy">
+          <div className="about-copy reveal reveal-delay-1" data-reveal="up">
             <p className="lead">AI가 모든 분야에 관여하는 미래에<br />제 자신을 걸어보기로 했습니다.</p>
             <p>익숙한 길을 벗어나 새로운 기술을 배우고, 아이디어가 실제 서비스가 되는 과정을 경험하며 개발자로의 가능성을 확신했습니다.</p>
           </div>
           <div className="strength-list">
-            {strengths.map((strength) => (
-              <article key={strength.number} className="strength-card">
+            {strengths.map((strength, index) => (
+              <article
+                key={strength.number}
+                className={`strength-card reveal reveal-delay-${index}`}
+                data-reveal="up"
+              >
                 <span>{strength.number}</span>
                 <div><small>{strength.source}</small><h3>{strength.title}</h3><p>{strength.description}</p></div>
               </article>
@@ -55,12 +61,16 @@ export default function Home() {
 
         <section className="skills-section" id="skills" aria-labelledby="skills-title">
           <div className="section-shell">
-            <div className="section-heading horizontal">
+            <div className="section-heading horizontal reveal" data-reveal="up">
               <span className="eyebrow">02 · SKILLS</span><h2 id="skills-title">불가능이 사라진 사회에서 서비스를 만듭니다.</h2>
             </div>
             <div className="skills-grid">
               {skillGroups.map((group, index) => (
-                <article className="skill-group" key={group.title}>
+                <article
+                  className={`skill-group reveal reveal-delay-${index % 3}`}
+                  data-reveal="up"
+                  key={group.title}
+                >
                   <span>0{index + 1}</span><h3>{group.title}</h3>
                   <ul>{group.skills.map((skill) => <li key={skill}>{skill}</li>)}</ul>
                 </article>
@@ -70,12 +80,16 @@ export default function Home() {
         </section>
 
         <section className="section-shell projects-section" id="projects" aria-labelledby="projects-title">
-          <div className="section-heading horizontal">
+          <div className="section-heading horizontal reveal" data-reveal="up">
             <span className="eyebrow">03 · SELECTED WORK</span><h2 id="projects-title">프로젝트로 증명한 성장의 기록</h2>
           </div>
           <div className="project-grid">
-            {projects.map((project) => (
-              <ProjectCard project={project} key={project.number} />
+            {projects.map((project, index) => (
+              <ProjectCard
+                project={project}
+                key={project.number}
+                revealDelay={index % 2}
+              />
             ))}
           </div>
         </section>
@@ -89,11 +103,11 @@ export default function Home() {
         </section>
 
         <section className="section-shell vision-section" id="vision" aria-labelledby="vision-title">
-          <div className="section-heading">
+          <div className="section-heading reveal" data-reveal="up">
             <span className="eyebrow">05 · VISION</span><h2 id="vision-title">다른 배경이 만드는 새로운 관점</h2>
           </div>
-          <p className="vision-copy">
-            비전공이라는 배경은 저의 약점이 아니라, <strong>다양한 관점으로 문제를 바라보고 새로운 기술을 빠르게 익힐 수 있는 힘</strong>이라고 믿습니다.
+          <p className="vision-copy reveal reveal-delay-1" data-reveal="up">
+            비전공이라는 배경은 저의 약점이 아니라, <strong className="vision-highlight">다양한 관점으로 문제를 바라보고 새로운 기술을 빠르게 익힐 수 있는 힘</strong>이라고 믿습니다.
             사용자에게 필요한 경험을 고민하고, 아이디어를 실제 웹서비스로 구현하며 함께 성장하는 개발자가 되겠습니다.
           </p>
         </section>

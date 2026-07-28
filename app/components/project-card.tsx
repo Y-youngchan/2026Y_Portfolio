@@ -22,11 +22,23 @@ function DetailGroup({
   );
 }
 
-export function ProjectCard({ project }: { project: Project }) {
+export function ProjectCard({
+  project,
+  revealDelay,
+}: {
+  project: Project;
+  revealDelay?: number;
+}) {
   const [isFlipped, setIsFlipped] = useState(false);
+  const revealClass = revealDelay === undefined
+    ? ""
+    : ` reveal reveal-delay-${revealDelay}`;
 
   return (
-    <article className={`project-card project-${project.accent}`}>
+    <article
+      className={`project-card project-${project.accent}${revealClass}`}
+      data-reveal={revealDelay === undefined ? undefined : "up"}
+    >
       <div
         className="project-card-flip-zone"
         onMouseEnter={() => setIsFlipped(true)}
