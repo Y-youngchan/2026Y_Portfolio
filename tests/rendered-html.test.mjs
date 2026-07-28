@@ -83,6 +83,9 @@ test("renders desktop sidebar and accessible mobile navigation", async () => {
   const html = await response.text();
   const documentHtml = html.split('<script id="_R_">', 1)[0];
 
+  assert.match(documentHtml, /class="sidebar-edge-trigger"/);
+  assert.match(documentHtml, /aria-controls="desktop-navigation"/);
+  assert.match(documentHtml, /id="desktop-navigation"/);
   assert.match(documentHtml, /class="site-sidebar"/);
   assert.match(documentHtml, /class="mobile-menu-toggle"/);
   assert.match(documentHtml, /aria-controls="mobile-navigation"/);
@@ -90,6 +93,34 @@ test("renders desktop sidebar and accessible mobile navigation", async () => {
   assert.match(documentHtml, /id="mobile-navigation"/);
   assert.match(documentHtml, /class="mobile-menu-overlay"/);
   assert.doesNotMatch(documentHtml, /class="site-header"/);
+});
+
+test("renders flippable project cards with verified details", async () => {
+  const response = await render();
+  const html = await response.text();
+  const documentHtml = html.split('<script id="_R_">', 1)[0];
+
+  assert.equal((documentHtml.match(/project-card-front/g) ?? []).length, 4);
+  assert.equal((documentHtml.match(/project-card-back/g) ?? []).length, 4);
+  assert.equal((documentHtml.match(/class="project-card-toggle"/g) ?? []).length, 4);
+  assert.equal((documentHtml.match(/class="project-actions"/g) ?? []).length, 4);
+  assert.equal((documentHtml.match(/>CONTRIBUTION</g) ?? []).length, 4);
+
+  for (const detail of [
+    "Python",
+    "Pandas",
+    "NumPy",
+    "Scikit-learn",
+    "Random Forest",
+    "Ridge",
+    "Grid Search",
+    "Optuna",
+    "혼합 앙상블",
+  ]) {
+    assert.match(documentHtml, new RegExp(detail));
+  }
+
+  assert.doesNotMatch(documentHtml, /프로젝트 코드 확인 후 업데이트|기술 스택 정리 중/);
 });
 
 test("includes responsive and reduced-motion safeguards", async () => {
@@ -100,7 +131,14 @@ test("includes responsive and reduced-motion safeguards", async () => {
   assert.match(css, /focus-visible/);
   assert.match(css, /overflow-x:\s*hidden/);
   assert.match(css, /\.site-sidebar[\s\S]*width:\s*220px/);
-  assert.match(css, /\.site-content[\s\S]*margin-left:\s*220px/);
+  assert.match(css, /\.site-content\s*\{[^}]*margin-left:\s*0/);
+  assert.match(css, /\.sidebar-edge-trigger[\s\S]*width:\s*25px/);
+  assert.match(css, /\.sidebar-edge-trigger:hover,[\s\S]*width:\s*32px/);
+  assert.match(css, /\.site-sidebar[\s\S]*translateX\(-100%\)/);
+  assert.match(css, /\.project-card\s*\{[^}]*min-height:\s*550px/);
+  assert.match(css, /\.project-card-flip-zone\s*\{[^}]*min-height:\s*370px/);
+  assert.match(css, /@media \(max-width:\s*760px\)[\s\S]*\.project-card\s*\{[^}]*min-height:\s*530px/);
+  assert.match(css, /@media \(max-width:\s*760px\)[\s\S]*\.project-card-inner\s*\{[^}]*min-height:\s*350px/);
   assert.match(css, /@media \(max-width:\s*900px\)/);
   assert.match(css, /width:\s*min\(280px,\s*85vw\)/);
   assert.match(css, /translateX\(6px\)/);

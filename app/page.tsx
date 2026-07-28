@@ -1,4 +1,4 @@
-import { ProjectActions } from "./components/project-actions";
+import { ProjectCard } from "./components/project-card";
 import { SiteNavigation } from "./components/site-navigation";
 import { projects, skillGroups, strengths } from "./data/portfolio-data";
 
@@ -76,18 +76,7 @@ export default function Home() {
           </div>
           <div className="project-grid">
             {projects.map((project) => (
-              <article className={`project-card project-${project.accent}`} key={project.number}>
-                <div className="project-top"><span className="project-number">{project.number}</span><small>{project.type}</small></div>
-                <div className="project-body">
-                  <h3>{project.title}</h3><p>{project.description}</p>
-                  <ul aria-label={`${project.title} 담당 역할`}>{project.role.map((role) => <li key={role}>{role}</li>)}</ul>
-                </div>
-                <ProjectActions
-                  title={project.title}
-                  githubUrl={project.githubUrl}
-                  projectUrl={project.projectUrl}
-                />
-              </article>
+              <ProjectCard project={project} key={project.number} />
             ))}
           </div>
         </section>

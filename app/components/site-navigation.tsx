@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { navigationItems } from "../data/portfolio-data";
 
@@ -42,26 +42,84 @@ function ContactLink({ onNavigate }: { onNavigate?: () => void }) {
 }
 
 export function SiteNavigation() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const clearCloseTimer = () => {
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+  };
+
+  const openSidebar = () => {
+    clearCloseTimer();
+    setIsSidebarOpen(true);
+  };
+
+  const closeSidebar = () => {
+    clearCloseTimer();
+    setIsSidebarOpen(false);
+  };
+
+  const scheduleSidebarClose = () => {
+    clearCloseTimer();
+    closeTimerRef.current = setTimeout(() => {
+      setIsSidebarOpen(false);
+      closeTimerRef.current = null;
+    }, 200);
+  };
+
   const closeMenu = () => setIsMenuOpen(false);
 
   useEffect(() => {
-    if (!isMenuOpen) return;
-
     const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") closeMenu();
+      if (event.key === "Escape") {
+        closeSidebar();
+        closeMenu();
+      }
     };
 
     window.addEventListener("keydown", closeOnEscape);
-    return () => window.removeEventListener("keydown", closeOnEscape);
-  }, [isMenuOpen]);
+    return () => {
+      window.removeEventListener("keydown", closeOnEscape);
+      clearCloseTimer();
+    };
+  }, []);
 
   return (
     <>
-      <aside className="site-sidebar" aria-label="데스크톱 내비게이션">
+      <button
+        className="sidebar-edge-trigger"
+        type="button"
+        aria-label="사이드바 메뉴 열기"
+        aria-controls="desktop-navigation"
+        aria-expanded={isSidebarOpen}
+        onMouseEnter={openSidebar}
+        onFocus={openSidebar}
+      >
+        <span>MENU</span>
+      </button>
+
+      <aside
+        className={`site-sidebar${isSidebarOpen ? " is-open" : ""}`}
+        id="desktop-navigation"
+        aria-label="데스크톱 내비게이션"
+        aria-hidden={!isSidebarOpen}
+        inert={!isSidebarOpen}
+        onMouseEnter={openSidebar}
+        onMouseLeave={scheduleSidebarClose}
+        onFocus={openSidebar}
+        onBlur={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget)) {
+            scheduleSidebarClose();
+          }
+        }}
+      >
         <Brand />
-        <NavigationLinks />
-        <ContactLink />
+        <NavigationLinks onNavigate={closeSidebar} />
+        <ContactLink onNavigate={closeSidebar} />
       </aside>
 
       <button
