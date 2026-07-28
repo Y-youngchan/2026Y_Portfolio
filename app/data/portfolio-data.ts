@@ -80,7 +80,7 @@ export const projects = [
     title: "계절별 감기약 수요 예측",
     type: "팀 프로젝트",
     description: "계절에 따른 감기약 수요를 예측하는 머신러닝·딥러닝 모델을 이끌고 서비스로 구현했습니다.",
-    contribution: ["팀장", "데이터 전처리", "모델 학습 및 비교", "서비스 구현"],
+    contribution: ["팀장", "기획", "데이터 전처리", "모델 학습 및 비교", "서비스 구현"],
     techStack: ["Python", "Pandas", "NumPy", "Scikit-learn", "XGBoost", "Streamlit"],
     models: ["Random Forest", "XGBoost", "Ridge", "Lasso"],
     methods: ["Grid Search", "Optuna", "Bagging", "Voting", "Boosting", "Stacking", "혼합 앙상블"],
